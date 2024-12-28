@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Questionnaire</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffe6e6;
+        }
+
+        .question {
+            margin: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .options {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #e60000;
+        }
+
+        .heart-animation {
+            display: none;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .heart {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: relative;
+            margin: 0 auto 20px auto;
+            transform: rotate(-45deg);
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -50px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: 50px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <script>
+        function handleAnswer(isYes, nextQuestionId, animationId) {
+            if (!isYes) {
+                alert("Think again 😊");
+                return;
+            }
+
+            const currentQuestion = document.querySelector(".question-container");
+            if (nextQuestionId) {
+                currentQuestion.innerHTML = document.querySelector(`#${nextQuestionId}`).innerHTML;
+            } else if (animationId) {
+                currentQuestion.style.display = "none";
+                document.querySelector(`#${animationId}`).style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="question-container">
+        <div id="question1">
+            <p class="question">Do you love your boyfriend??</p>
+            <div class="options">
+                <button onclick="handleAnswer(true, 'question2')">Yes</button>
+                <button onclick="handleAnswer(false)">No</button>
+            </div>
+        </div>
+
+        <div id="question2" style="display: none;">
+            <p class="question">Does he love you back??</p>
+            <div class="options">
+                <button onclick="handleAnswer(true, null, 'heartAnimation')">Yes</button>
+                <button onclick="handleAnswer(false)">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="heartAnimation" class="heart-animation">
+        <div class="heart"></div>
+        <p>I love you, baby ❤️</p>
+    </div>
+</body>
+</html>
